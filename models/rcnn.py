@@ -14,11 +14,11 @@ class RCNN(nn.Module):
     def __init__(self, roi_res=100, pooling_type='square'):
         super().__init__()
         # load backbone
-        self.backbone = resnet50(pretrained=True, norm_layer=FrozenBatchNorm2d)
+        self.backbone = resnet50(pretrained=True, norm_layer=FrozenBatchNorm2d) #ResNet-50 backbone
         self.backbone.fc = nn.Linear(in_features=2048, out_features=2)
         
         # freeze bottom layers
-        layers_to_train = ['layer4', 'layer3', 'layer2']
+        layers_to_train = ['layer4', 'layer3', 'layer2'] # layers to remain unfrozen
         for name, parameter in self.backbone.named_parameters():
             if all([not name.startswith(layer) for layer in layers_to_train]):
                 parameter.requires_grad_(False)
@@ -34,4 +34,4 @@ class RCNN(nn.Module):
         # pass warped images through classifier
         class_logits = self.backbone(warps)
         
-        return class_logits
+        return class_logits # output unnormalized model predictions (logits)
