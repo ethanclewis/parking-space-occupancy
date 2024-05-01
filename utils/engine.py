@@ -132,19 +132,19 @@ def train_model(model, train_ds, valid_ds, test_ds, model_dir, device, lr=1e-4, 
             os.makedirs(model_dir, exist_ok=False)
 
             # create log header
-            with open(f'{model_dir}/train_log.csv', 'w', newline='\n', encoding='utf-8') as f:
+            with open(f'{model_dir}\\train_log.csv', 'w', newline='\n', encoding='utf-8') as f:
                 f.write('train_loss,train_accuracy,valid_loss,valid_accuracy\n')
 
         # save epoch logs
-        with open(f'{model_dir}/train_log.csv', 'a', newline='\n', encoding='utf-8') as f:
+        with open(f'{model_dir}\\train_log.csv', 'a', newline='\n', encoding='utf-8') as f:
             f.write(f'{train_loss:.4f},{train_accuracy:.4f},{valid_loss:.4f},{valid_accuracy:.4f}\n')
 
         # save weights
-        torch.save(model.state_dict(), f'{model_dir}/weights_last_epoch.pt')
+        torch.save(model.state_dict(), f'{model_dir}/weights_baseline.pt')
         
     # test model on test dataset
     test_loss, test_accuracy = eval_one_epoch(model, test_ds, res)
-    with open(f'{model_dir}/test_logs.json', 'w') as f:
+    with open(f'{model_dir}\\test_logs.json', 'w') as f:
         json.dump({'loss': test_loss, 'accuracy': test_accuracy}, f)
 
     # delete model from memory
@@ -250,7 +250,7 @@ def train_model_random_speckle_erase_before(model, train_ds, valid_ds, test_ds, 
             f.write(f'{train_loss:.4f},{train_accuracy:.4f},{valid_loss:.4f},{valid_accuracy:.4f}\n')
 
         # save weights
-        torch.save(model.state_dict(), f'{model_dir}/weights_v3.pt')
+        torch.save(model.state_dict(), f'{model_dir}/weights_random_seb.pt')
         
     # evaluate model on test set 
     test_loss, test_accuracy = eval_one_epoch(model, test_ds, res)
@@ -360,7 +360,7 @@ def train_model_proportional_speckle_erase_before(model, train_ds, valid_ds, tes
             f.write(f'{train_loss:.4f},{train_accuracy:.4f},{valid_loss:.4f},{valid_accuracy:.4f}\n')
 
         # save weights
-        torch.save(model.state_dict(), f'{model_dir}/weights_v3.pt')
+        torch.save(model.state_dict(), f'{model_dir}/weights_proportional_seb.pt')
         
     # evaluate model on test set 
     test_loss, test_accuracy = eval_one_epoch(model, test_ds, res)
