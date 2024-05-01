@@ -173,7 +173,7 @@ def speckle_noise_before(image, rois, var=1.0):
     return image, rois
 
 # Speckle Noise (After color jitter)
-def speckle_noise_before(image, rois, var=1.0):
+def speckle_noise_after(image, rois, var=1.0):
     """
     Apply Speckle Noise (var=1.0)
     """
